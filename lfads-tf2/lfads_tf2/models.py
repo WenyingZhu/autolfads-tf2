@@ -1,7 +1,7 @@
 import copy
 import io
 import logging.config
-import os
+import os, time
 import shutil
 
 import git
@@ -1412,7 +1412,7 @@ class LFADS(Model):
             loss = train_df.at[cur_epoch, "loss"]
             val_loss = train_df.at[cur_epoch, "val_loss"]
             pass_check = True
-            nan_found = np.isnan(loss) or np.isnan(val_loss)
+            nan_found = np.isnan(loss).any() or np.isnan(val_loss).any()
             # Only stop for NaN loss when not in PBT_MODE
             if not cfg.PBT_MODE and nan_found:
                 self.lgr.info("STOPPING: NaN found in loss.")
@@ -1422,6 +1422,10 @@ class LFADS(Model):
         def check_lr(train_df):
             """ Check if training should stop because of the learning rate. """
             cur_lr = train_df.at[cur_epoch, "lr"]
+            if isinstance(cur_lr, pd.Series): 
+                cur_lr = cur_lr.iloc[0]
+            elif not isinstance(cur_lr, (float, np.float64, np.float32)): 
+                print('cur_lr type', type(cur_lr))
             pass_check = True
             if cur_lr <= cfg.LR.STOP:
                 self.lgr.info(f"STOPPING: Learning rate has reached {cfg.LR.STOP}.")
@@ -1672,8 +1676,13 @@ class LFADS(Model):
             )
         )
         done = False
+        epoch_counter = 0
         while not done:
+            epoch_counter += 1
+            epoch_start_time = time.time() 
             results = self.train_epoch()
+            epoch_end_time = time.time()
+            print(f"epoch {epoch_counter} time taken: {epoch_end_time - epoch_start_time:0.2f}s")
             done = results.get("done", False)
 
         # restore the best model if not using the most recent checkpoints
