@@ -49,5 +49,5 @@ TRAIN:
   TUNE_MODE: True
   LOG_HPS: True
   USE_TB: False
-  MODEL_DIR: '/home/jupyter/NeuralLatents-autolfads/neural_latents_caltech/autolfads_models/mc_maze_medium_train_0/tuneLFADS_588e2_00000_0_2022-03-31_20-15-45/model_dir' # OVERWRITTEN
+  MODEL_DIR: '/home/jupyter/NeuralLatents-autolfads/neural_latents_caltech/autolfads_models/mc_maze_medium_train_moreParams/tuneLFADS_e3f90_00000_0_2022-04-01_18-31-05/model_dir' # OVERWRITTEN
   OVERWRITE: True
