@@ -1,7 +1,7 @@
 ---
 MODEL:
-  DATA_DIM: 152 # 156
-  # CS_DIM: 38
+  DATA_DIM: 142 # 130
+  # CS_DIM: 35
   SEQ_LEN: 180
   # FP_LEN: 40
   IC_ENC_DIM: 100
@@ -10,7 +10,7 @@ MODEL:
   CO_DIM: 4
   IC_DIM: 100
   GEN_DIM: 100
-  FAC_DIM: 40
+  FAC_DIM: 20
   DROPOUT_RATE: 0.05 # OVERWRITTEN
   CD_RATE: 0.5 # OVERWRITTEN
   CD_PASS_RATE: 0.0
@@ -21,7 +21,7 @@ MODEL:
 TRAIN:
   DATA:
     DIR: "/home/jupyter/NeuralLatents-autolfads/data/h5_autolfads/lfads_input/"
-    PREFIX: mc_maze_medium_train
+    PREFIX: mc_maze_small_train
   PATIENCE: 5000 # Early stopping should be off
   BATCH_SIZE: 100 # 100 for the 230-sample dataset
   MAX_EPOCHS: 10000
@@ -49,5 +49,5 @@ TRAIN:
   TUNE_MODE: True
   LOG_HPS: True
   USE_TB: False
-  MODEL_DIR: '' # OVERWRITTEN
+  MODEL_DIR: '/home/jupyter/NeuralLatents-autolfads/neural_latents_caltech/lfads_models/model_outputs_small_fewerFacs' # OVERWRITTEN
   OVERWRITE: True
